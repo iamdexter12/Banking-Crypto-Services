@@ -6,12 +6,15 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.service.annotation.PatchExchange;
+
 import com.spring.userservice.requestdto.KycRequestDto;
 import com.spring.userservice.requestdto.SignupOtpRequestDto;
 import com.spring.userservice.requestdto.VerifySignupOtpRequestDto;
@@ -59,7 +62,7 @@ public class UserController {
 
 	}
 
-	@PostMapping("/kyc/{email}")
+	@PatchMapping("/kyc/{email}")
 	public ResponseEntity<Object> doKyc(@RequestBody KycRequestDto kycRequestDto, @PathVariable String email) {
 		String completeKyc = userService.completeKyc(kycRequestDto, email);
 		return ResponseHandler.generateResponse(completeKyc, HttpStatus.CREATED);

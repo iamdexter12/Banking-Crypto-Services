@@ -1,31 +1,33 @@
 package com.spring.userservice.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
+@Configuration
 public class WebclientConfig {
-	
-	/**
-	 * Creates a WebClient builder for making reactive HTTP requests.
-	 * 
-	 * @return WebClient.Builder instance
-	 */
-	@Bean
-	public WebClient.Builder saltedgeWebClientBuilder() {
+
+    /**
+     * Creates a WebClient builder for making reactive HTTP requests.
+     * 
+     * @return WebClient.Builder instance
+     */
+    @Bean
+    WebClient.Builder saltedgeWebClientBuilder() {
 		return WebClient.builder().defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
 				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 	}
 
-	/**
-	 * Creates a WebClient for making reactive HTTP requests.
-	 * 
-	 * @return WebClient instance
-	 */
-	@Bean
-	public WebClient saltedgeWebClient() {
+    /**
+     * Creates a WebClient for making reactive HTTP requests.
+     * 
+     * @return WebClient instance
+     */
+    @Bean
+    WebClient saltedgeWebClient() {
 		return saltedgeWebClientBuilder().build();
 	}
 
