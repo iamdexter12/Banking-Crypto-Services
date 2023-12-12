@@ -34,7 +34,7 @@ public class AddressServiceImpl implements AddressService {
 		}
 		Address address = new Address();
 		address.setPermanentAddress(addressRequestDto.getPermanentAddress());
-		address.setState(addressRequestDto.getState());
+		
 		address.setCity(addressRequestDto.getCity());
 		address.setPinCode(addressRequestDto.getPinCode());
 		address.setUser(user.get());

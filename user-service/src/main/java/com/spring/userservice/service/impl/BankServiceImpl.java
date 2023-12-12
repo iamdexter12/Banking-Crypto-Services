@@ -26,7 +26,7 @@ public class BankServiceImpl implements BankService {
 		Optional<User> user = userService.getUser(email);
 
 		user.ifPresent(u -> {
-			if (!u.isKycEnabled()) {
+			if (!u.getKycStatus().equals("Approved")) {
 				throw new NotFoundException("kyc", "User has pending KYC!");
 			}
 

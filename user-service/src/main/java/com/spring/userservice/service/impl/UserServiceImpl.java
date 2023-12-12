@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service;
 import com.spring.userservice.exception.AlreadyExistException;
 import com.spring.userservice.exception.ExpiredException;
 import com.spring.userservice.exception.NotFoundException;
-import com.spring.userservice.model.Kyc;
 import com.spring.userservice.model.User;
-import com.spring.userservice.repository.KycRepository;
 import com.spring.userservice.repository.UserRepository;
 import com.spring.userservice.requestdto.KycRequestDto;
 import com.spring.userservice.requestdto.SignupOtpRequestDto;
@@ -28,7 +26,6 @@ public class UserServiceImpl implements UserService {
 	private final OtpService otpService;
 	private final JavamailService javamailService;
 	private final UserRepository userRepository;
-	private final KycRepository kycRepository;
 
 	@Override
 	public String sendSignupOtp(SignupOtpRequestDto signupOtpRequestDto) {
@@ -81,30 +78,24 @@ public class UserServiceImpl implements UserService {
 		user.setName(userDataParts[3]);
 		user.setMobileNumber(userDataParts[2]);
 		user.setPassword(userDataParts[4]);
-		user.setKycEnabled(false);
-
+		user.setKycStatus("Not Submitted");
 		return user;
 	}
 
 	@Override
 	public String completeKyc(KycRequestDto kycRequestDto, String email) {
-		getUser(email).ifPresentOrElse(user -> {
-			if (user.isKycEnabled()) {
-				throw new AlreadyExistException("Kyc", "Already kyc done");
-			}
-
-			Kyc kyc = new Kyc();
-			kyc.setAadharCard(kycRequestDto.getAadharCard());
-			kyc.setPanCard(kycRequestDto.getPanCard());
-			kyc.setEmail(email);
-			kycRepository.save(kyc);
-
-			user.setKycEnabled(true);
-			userRepository.save(user);
-		}, () -> {
-			throw new NotFoundException("Email", "Not found");
-		});
-		return "Kyc completed";
+		Optional<User> user=userRepository.findByEmail(email);
+		if(user.isEmpty()) {
+			throw new NotFoundException(email, "Email donot exists");
+		}
+		User currentUser=user.get();
+		if(currentUser.getKycStatus().equals("Approved")) {
+			throw new AlreadyExistException(email, "Kyc is approved");
+		}
+		currentUser.setAadharCard(kycRequestDto.getAadharCard());
+		currentUser.setPancard(kycRequestDto.getPanCard());
+		userRepository.save(currentUser);
+		return"Kyc completed";
 	}
 
 	@Override

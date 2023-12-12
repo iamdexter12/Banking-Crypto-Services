@@ -19,7 +19,6 @@ public class Address {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer addressId;
 	private String permanentAddress;
-	private String state;
 	private String city;
 	private String pinCode;
 	

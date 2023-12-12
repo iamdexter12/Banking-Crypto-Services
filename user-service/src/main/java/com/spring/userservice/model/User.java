@@ -23,9 +23,13 @@ public class User {
 	private String name;
 	private String email;
 	private String mobileNumber;
-	private boolean isKycEnabled;
+	
 	private String password;
-
+	private String aadharCard;
+	private String pancard;
+	private String kycStatus;
+	
+	
 	@OneToMany(mappedBy = "user")
 	private List<BankAccount> bankAccounts;
 
