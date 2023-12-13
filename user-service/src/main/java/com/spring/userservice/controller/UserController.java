@@ -36,7 +36,7 @@ public class UserController {
 			@RequestParam(required = true) String email) {
 		String registerUser = userService.registerUser(email, verifySignupOtpRequestDto);
 
-		Link doKycLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UserController.class).doKyc(null, email))
+		Link doKycLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UserController.class).kyc(null, email))
 				.withRel("doKyc");
 
 		Link addAddressLink = WebMvcLinkBuilder
@@ -59,11 +59,15 @@ public class UserController {
 
 		List<Link> links = Arrays.asList(verifyEmailOtpLink);
 		return ResponseHandler.generateResponse("Otp Sent succesfully", HttpStatus.CREATED, sendSignupOtp, links);
-
 	}
 
+<<<<<<< Updated upstream
 	@PatchMapping("/kyc/{email}")
 	public ResponseEntity<Object> doKyc(@RequestBody KycRequestDto kycRequestDto, @PathVariable String email) {
+=======
+	@PostMapping("/kyc/{email}")
+	public ResponseEntity<Object> kyc(@RequestBody KycRequestDto kycRequestDto, @PathVariable String email) {
+>>>>>>> Stashed changes
 		String completeKyc = userService.completeKyc(kycRequestDto, email);
 		return ResponseHandler.generateResponse(completeKyc, HttpStatus.CREATED);
 	}

@@ -6,9 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 public class JacksonConfig {
-	
-	@Bean
-	public ObjectMapper objectMapper()
+
+    @Bean
+    ObjectMapper objectMapper()
 	{
 		return new ObjectMapper();
 	}

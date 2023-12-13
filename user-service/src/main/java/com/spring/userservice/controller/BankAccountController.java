@@ -25,7 +25,6 @@ public class BankAccountController {
 	public ResponseEntity<Object> addBankAccount(@RequestBody AddbankAccountRequestDto addbankAccountRequestDto,
 			@PathVariable String email) {
 		String openBankAccount = bankService.openBankAccount(addbankAccountRequestDto, email);
-
 		return ResponseHandler.generateResponse(openBankAccount, HttpStatus.CREATED);
 	}
 

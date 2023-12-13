@@ -21,7 +21,6 @@ public class Address {
 	private String permanentAddress;
 	private String city;
 	private String pinCode;
-	
 	@OneToOne
 	private User user;
 
