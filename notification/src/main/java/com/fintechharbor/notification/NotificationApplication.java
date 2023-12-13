@@ -1,13 +1,13 @@
-package com.fintechharbor.otp;
+package com.fintechharbor.notification;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class OtpApplication {
+public class NotificationApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(OtpApplication.class, args);
+		SpringApplication.run(NotificationApplication.class, args);
 	}
 
 }

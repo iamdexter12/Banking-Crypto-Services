@@ -1,10 +1,10 @@
-package com.fintechharbor.otp;
+package com.fintechharbor.notification;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class OtpApplicationTests {
+class NotificationApplicationTests {
 
 	@Test
 	void contextLoads() {

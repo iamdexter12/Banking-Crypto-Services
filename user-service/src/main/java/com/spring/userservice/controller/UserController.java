@@ -13,30 +13,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.service.annotation.PatchExchange;
 
+import com.spring.userservice.config.WebclientConfig;
+import com.spring.userservice.requestdto.EmailOtpRequestDto;
 import com.spring.userservice.requestdto.KycRequestDto;
 import com.spring.userservice.requestdto.SignupOtpRequestDto;
 import com.spring.userservice.requestdto.VerifySignupOtpRequestDto;
+import com.spring.userservice.responsedto.EmailOtpResponseDto;
 import com.spring.userservice.service.UserService;
 import com.spring.userservice.util.ResponseHandler;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/user")
-@RequiredArgsConstructor
 @Tag(name = "User Controller", description = "API controller for all user related operation")
+@RequiredArgsConstructor
 public class UserController {
 
 	private final UserService userService;
+	private final WebclientConfig webclientConfig;
 
 	@PostMapping("/verify")
 	public ResponseEntity<Object> verifyAndRegister(@RequestBody VerifySignupOtpRequestDto verifySignupOtpRequestDto,
 			@RequestParam(required = true) String email) {
 		String registerUser = userService.registerUser(email, verifySignupOtpRequestDto);
 
-		Link doKycLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UserController.class).kyc(null, email))
+		Link doKycLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UserController.class).doKyc(null, email))
 				.withRel("doKyc");
 
 		Link addAddressLink = WebMvcLinkBuilder
@@ -61,15 +66,19 @@ public class UserController {
 		return ResponseHandler.generateResponse("Otp Sent succesfully", HttpStatus.CREATED, sendSignupOtp, links);
 	}
 
-<<<<<<< Updated upstream
 	@PatchMapping("/kyc/{email}")
 	public ResponseEntity<Object> doKyc(@RequestBody KycRequestDto kycRequestDto, @PathVariable String email) {
-=======
-	@PostMapping("/kyc/{email}")
-	public ResponseEntity<Object> kyc(@RequestBody KycRequestDto kycRequestDto, @PathVariable String email) {
->>>>>>> Stashed changes
 		String completeKyc = userService.completeKyc(kycRequestDto, email);
 		return ResponseHandler.generateResponse(completeKyc, HttpStatus.CREATED);
+	}
+
+	@PostMapping("/send/otp")
+	public ResponseEntity<EmailOtpResponseDto> demo(@RequestBody EmailOtpRequestDto emailRequestDto) {
+		EmailOtpResponseDto post = webclientConfig.post("http://localhost:1010/otp/send/email", emailRequestDto,
+				EmailOtpResponseDto.class);
+		log.info("Response from OtpService {}", post);
+		return ResponseEntity.ok(post);
+
 	}
 
 }

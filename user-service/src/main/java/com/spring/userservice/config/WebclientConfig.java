@@ -55,6 +55,7 @@ public class WebclientConfig {
 	 * @return Response of the specified type
 	 */
 	public <T> T post(String url, Object requestBody, Class<T> responseType) {
+		System.out.println(requestBody);
 		return saltedgeWebClient().post().uri(url).body(BodyInserters.fromValue(requestBody)).retrieve()
 				.bodyToMono(responseType).block();
 	}

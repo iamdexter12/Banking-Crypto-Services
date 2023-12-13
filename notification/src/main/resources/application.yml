@@ -2,20 +2,13 @@ spring:
   profiles:
     active: development
   application:
-    name: User-Service
+    name: Otp-Service
      
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/user_database?createDatabaseIfNotExist=true
-    username: root
-    password: 110062
-
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
-    hibernate:
-      ddl-auto: update 
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: Otp
         
 thread:
   pool:
@@ -27,7 +20,7 @@ thread:
       
 
 server:
-  port: 4046
+  port: 1010
 ---
 
 spring:

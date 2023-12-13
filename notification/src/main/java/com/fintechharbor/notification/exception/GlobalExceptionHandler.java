@@ -1,4 +1,4 @@
-package com.spring.userservice.exception;
+package com.fintechharbor.notification.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
-import com.spring.userservice.responsedto.ErrorResponse;
+import com.fintechharbor.notification.responsedto.ErrorResponse;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -25,8 +25,8 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ErrorResponse> webClientExceptionHandler(WebClientResponseException webClientException) {
 		final String errorMessage = webClientException.getMessage();
 		final HttpStatusCode errorCode = webClientException.getStatusCode();
-		System.out.println(webClientException.getLocalizedMessage());
 		ErrorResponse response = new ErrorResponse("Webclient", errorMessage, false);
 		return new ResponseEntity<>(response, errorCode);
 	}
+
 }
